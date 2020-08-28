@@ -68,6 +68,12 @@ FAIL_TASKS = '''
       ini_file:
         path: foo
         create: true
+    - block:
+        - block:
+            - name: permissions missing and might create file
+              file:
+                path: foo
+                state: touch
 '''
 
 
@@ -82,4 +88,4 @@ def test_success(rule_runner):
 def test_fail(rule_runner):
     """Validate that missing mode triggers the rule."""
     results = rule_runner.run_playbook(FAIL_TASKS)
-    assert len(results) == 3
+    assert len(results) == 4
